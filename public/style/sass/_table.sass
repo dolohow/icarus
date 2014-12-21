@@ -1,0 +1,95 @@
+$main-color: #2c3e50
+$offer-color: #2ecc71
+.cbp-hrmenu
+	width: 100%
+	margin-top: 0em
+	border-bottom: 4px solid $main-color
+/* general ul style */
+.cbp-hrmenu ul 
+	margin: 0
+	padding: 0
+	list-style-type: none
+/* first level ul style */
+.cbp-hrmenu > ul,
+.cbp-hrmenu .cbp-hrsub-inner 
+	width: 90%
+	max-width: 70em
+	margin: 0 auto
+	padding: 0 1.875em
+.cbp-hrmenu > ul > li 
+	display: inline-block
+.cbp-hrmenu > ul > li > a 
+	font-weight: 700
+	padding: 1em 2em
+	color: $main-color
+	display: inline-block
+.cbp-hrmenu > ul > li > a:hover
+	color: #f0f0f0
+/*button of menu*/
+.cbp-hrmenu > ul > li.cbp-hropen a,
+.cbp-hrmenu > ul > li.cbp-hropen > a:hover 
+	color: #f0f0f0
+	background: $main-color
+/* sub-menu */
+.cbp-hrmenu .cbp-hrsub
+	display: none
+	position: absolute
+	background: $main-color
+	width: 100%
+	left: 0
+.cbp-hropen .cbp-hrsub
+	display: block
+	padding-bottom: 3em
+/*submenu conf of text*/
+.cbp-hrmenu .cbp-hrsub-inner > div
+	width: 27%
+	float: left
+	padding: 0 2em 0
+.cbp-hrmenu .cbp-hrsub-inner:before,
+.cbp-hrmenu .cbp-hrsub-inner:after
+	content: " "
+	display: table
+.cbp-hrmenu .cbp-hrsub-inner:after
+	clear: both
+.cbp-hrmenu .cbp-hrsub-inner > div a
+	line-height: 2em
+.cbp-hrsub h4
+	color: #f0f0f0
+	padding: 2em 0 0.6em
+	margin: 0
+	font-size: 160%
+	font-weight: 300
+.cbp-hrsub h2
+	color: #95a5a6
+	font-size: 92%
+	padding-bottom: 3px
+.cbp-hrsub h1
+	font-size: 100%
+	color: #001a33
+	font-weight: 150
+	padding-bottom: 3px
+.cbp-hrsub h3
+	font-size: 100%
+	color: #e74c3c
+	padding-bottom: 7px
+.cbp-hrsub h5
+	color: #2ecc71
+	font-size: 100%
+	padding-bottom: 3px
+	font-weight: 200
+h6
+	margin-left: 50px
+	margin-top: 50px
+	font-family: Helvetica
+	color: #34495e
+	font-size: 24px
+	padding-bottom: 2px
+h7
+	@extend h6
+	font-size: 14px
+	padding-bottom: 2px
+a
+	color: #f0f0f0
+	text-decoration: none
+a:hover
+	color: #000
