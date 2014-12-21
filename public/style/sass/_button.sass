@@ -1,0 +1,37 @@
+$buttonColor: #2ecc71
+$buttonDark: darken($buttonColor, 10%)
+$buttonDarker: darken($buttonDark, 10%)
+
+%input-style 
+  border-radius: 3px
+  color: #555
+  font-size: 17px
+  padding: 6px 18px
+  margin-right: 5px
+  display: inline-block
+  outline: 0
+  float: right
+
+.input 
+  @extend %input-style
+  border: 4px solid #ddd
+
+
+button 
+  background: $buttonColor
+  border-radius: 3px
+  box-shadow: 1px 2px 1px $buttonDark
+  border: 0
+  color: white
+  font-size: 17px
+  padding: 10px 20px
+  display: inline-block
+  outline: 0
+  margin-right: 10px
+  float: right
+  &:hover 
+    background: $buttonDark
+    box-shadow: 1px 2px 1px $buttonDarker
+  &:active 
+    box-shadow: none
+    margin-top: 1px 
