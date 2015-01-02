@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  form(action="/sendtoken" method="POST")
+    input(name="user", type="email")
+    input(type="submit", value="Login")

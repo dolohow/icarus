@@ -1,14 +1,18 @@
 'use strict';
 var express = require('express');
 var path = require('path');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var expressValidator = require('express-validator');
 var passwordless = require('passwordless');
 var MongoStore = require('passwordless-mongostore');
 var email = require('emailjs');
 var mongoose = require('mongoose');
 
+var index = require('./routes/index');
 var auth = require('./routes/auth');
 
 var credentials = require('./credentials');
@@ -20,12 +24,12 @@ mongoose.connect(credentials.mongodb);
 passwordless.addDelivery(
   function (tokenToSend, uidToSend, recipient, callback) {
     smtpServer.send({
-      text: 'token: ' + tokenToSend + '\nuid: ' +
-      //TODO: Here should be a generated link
+      text: 'Hello!\nAccess your account here: http://' +
+      credentials.domain + '/?token=' + tokenToSend + '&uid=' +
       encodeURIComponent(uidToSend),
       from: credentials.email.user,
       to: recipient,
-      subject: 'Token to Icarus service'
+      subject: 'Welcome to Icarus!'
     }, function (err, message) {
       if (err) {
         console.log(err, message);
@@ -36,18 +40,29 @@ passwordless.addDelivery(
 
 var app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 app.use(expressValidator());
+app.use(session({
+  secret: credentials.sessionSecret,
+  resave: false,
+  saveUninitialized: true
+}));
 expressValidator.validator.extend('toLowerCase',
   function (str) {
     return str.toLowerCase();
   }
 );
-app.use(passwordless.acceptToken());
+app.use(passwordless.sessionSupport());
+app.use(passwordless.acceptToken({successRedirect: '/'}));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', index);
 app.use('/', auth);
 app.use('/panel', passwordless.restricted(),
   express.static(path.join(__dirname, 'public/panel')));

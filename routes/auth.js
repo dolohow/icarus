@@ -5,10 +5,10 @@ var passwordless = require('passwordless');
 
 var User = require('../models/user');
 
-router.post('/reqtoken',
+router.post('/sendtoken',
   function (req, res, next) {
-    req.checkBody('email', 'Invalid email').isLength(1, 200).isEmail();
-    req.sanitize('email').toLowerCase().trim();
+    req.checkBody('user', 'Invalid email').isLength(1, 200).isEmail();
+    req.sanitize('user').toLowerCase().trim();
 
     var errors = req.validationErrors();
     if (errors) {
@@ -19,28 +19,28 @@ router.post('/reqtoken',
   },
   passwordless.requestToken(
     function (email, delivery, callback) {
-      User.findOne({email: email}, function (err, user) {
+      User.findOne({user: email}, function (err, user) {
         if (err) {
           callback(err.toString());
         }
         else if (user) {
-          callback(null, user.email);
+          callback(null, user.user);
         }
         else {
-          var newUser = new User({email: email});
-          newUser.save(function (err) {
+          var newUser = new User({user: email});
+          newUser.save(function (err, user) {
             if (err) {
               console.log(err);
               callback(err.toString());
             } else {
-              callback(null, user.email);
+              callback(null, user.user);
             }
           });
         }
       });
-    }, {userField: 'email'}),
+    }),
   function (req, res) {
-    res.json({msg: 'Login success'});
+    res.json({msg: 'Check your email'});
   }
 );
 

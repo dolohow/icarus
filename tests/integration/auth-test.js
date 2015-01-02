@@ -24,18 +24,18 @@ describe('Authentication', function () {
       }
     });
     request(url)
-      .post('/reqtoken')
-      .send('email=email@email.com')
+      .post('/sendtoken')
+      .send('user=email@email.com')
       .end(function () {
         done();
       });
   });
   it('should add new user to database', function (done) {
     request(url)
-      .post('/reqtoken')
-      .send('email=email@email.com')
+      .post('/sendtoken')
+      .send('user=email@email.com')
       .end(function () {
-        User.findOne({email: 'email@email.com'}, function (err, user) {
+        User.findOne({user: 'email@email.com'}, function (err, user) {
           assert.isNotNull(user);
           done();
       });
