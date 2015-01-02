@@ -11,6 +11,7 @@ var passwordless = require('passwordless');
 var MongoStore = require('passwordless-mongostore');
 var email = require('emailjs');
 var mongoose = require('mongoose');
+var i18n = require('i18n');
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
@@ -38,6 +39,11 @@ passwordless.addDelivery(
     });
   }, {ttl: 1000 * 60 * 24 * 7});
 
+i18n.configure({
+  locales:['en', 'pl'],
+  directory: __dirname + '/locales'
+});
+
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -48,6 +54,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(expressValidator());
+app.use(i18n.init);
 app.use(session({
   secret: credentials.sessionSecret,
   resave: false,
