@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var MongoStoreSession = require('connect-mongo')(session);
 var expressValidator = require('express-validator');
 var passwordless = require('passwordless');
 var MongoStore = require('passwordless-mongostore');
@@ -58,7 +59,8 @@ app.use(i18n.init);
 app.use(session({
   secret: credentials.sessionSecret,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStoreSession({mongooseConnection: mongoose.connection})
 }));
 expressValidator.validator.extend('toLowerCase',
   function (str) {
