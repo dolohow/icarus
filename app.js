@@ -13,9 +13,11 @@ var MongoStore = require('passwordless-mongostore');
 var email = require('emailjs');
 var mongoose = require('mongoose');
 var i18n = require('i18n');
+var basicAuth = require('http-auth');
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
+var admin = require('./routes/admin');
 
 var credentials = require('./credentials');
 
@@ -41,9 +43,17 @@ passwordless.addDelivery(
   }, {ttl: 1000 * 60 * 24 * 7});
 
 i18n.configure({
-  locales:['en', 'pl'],
+  locales: ['en', 'pl'],
   directory: __dirname + '/locales'
 });
+
+var basic = basicAuth.basic({
+    realm: 'Login is required'
+  }, function (username, password, callback) {
+    callback(username === credentials.basicAuth.username &&
+    password === credentials.basicAuth.password);
+  }
+);
 
 var app = express();
 
@@ -75,6 +85,7 @@ app.use('/', index);
 app.use('/', auth);
 app.use('/panel', passwordless.restricted(),
   express.static(path.join(__dirname, 'public/panel')));
+app.use('/admin', basicAuth.connect(basic), admin);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

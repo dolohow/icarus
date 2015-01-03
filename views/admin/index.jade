@@ -1,0 +1,26 @@
+extends layout
+block content
+  h1 Serwery
+  table
+    tr
+      th User
+      th GG
+      th Hostname
+      th Aktywnych torrentów
+      th Transfer
+      th VNC
+      th Dysk
+      th Cena
+      th Ważność
+      each user in users
+        each account in user.accounts
+          tr
+            td= user.user
+            td= user.gg
+            td= account.hostname.hostname
+            td= account.allowedTorrents
+            td= account.allowedTransfer
+            td= account.allowedVNC
+            td= account.allowedCapacity
+            td= account.price
+            td= account.validity

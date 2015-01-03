@@ -1,0 +1,15 @@
+extends ../layout
+block content
+  .form
+    form(method='post')
+      input(type='email', name='user', placeholder='email')
+      input(type='text', name='gg', placeholder='gg')
+      input(type='text', name='username', placeholder='username')
+      input(type='text', name='hostname', placeholder='hostname')
+      input(type='number', name='allowedTorrents', placeholder='allowedTorrents')
+      input(type='number', name='allowedTransfer', placeholder='allowedTransfer')
+      input(type='checkbox', name='allowedVNC', placeholder='allowedVNC')
+      input(type='number', name='allowedCapacity', placeholder='allowedCapacity')
+      input(type='number', name='price', placeholder='price')
+      input(type='date', name='validity')
+      input(type='submit', name='OK')

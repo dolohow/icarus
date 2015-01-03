@@ -12,12 +12,16 @@ var userSchema = new mongoose.Schema({
   money: {type: Number, default: 0},
   accounts: [{
     username: String,
-    hostname: String,
+    hostname: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Servers'
+    },
     allowedTorrents: Number,
     allowedTransfer: Number,
     allowedVNC: Boolean,
     allowedCapacity: Number,
-    price: Number
+    price: Number,
+    validity: Date
   }]
 });
 

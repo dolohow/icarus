@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title Panel admina
+    //-<!-- build:css dist/style/style.min.css -->
+    link(rel='stylesheet', href='/style/admin/style.css')
+    //-<!-- endbuild -->
+  body
+    #header
+      a(href='/admin') Admin
+      a(href='/admin/user/add') Dodaj usera
+      a(href='/admin/server/add') Dodaj serwer
+      a(href='/admin/payment/add') Dodaj wpłaty
+    block content
