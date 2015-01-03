@@ -1,7 +1,24 @@
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-  user: {type: String, required: true, index: {unique: true}}
+  user: {
+    type: String,
+    required: true,
+    lowercase: true,
+    trim: true,
+    index: {unique: true}
+  },
+  gg: Number,
+  money: {type: Number, default: 0},
+  accounts: [{
+    username: String,
+    hostname: String,
+    allowedTorrents: Number,
+    allowedTransfer: Number,
+    allowedVNC: Boolean,
+    allowedCapacity: Number,
+    price: Number
+  }]
 });
 
 var Users = mongoose.model('Users', userSchema);
