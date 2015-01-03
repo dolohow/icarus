@@ -7,46 +7,30 @@ module.exports = function (grunt) {
       build: {
         files: [{
           dot: true,
-          src: [
-            'dist/*',
-            '!dist/.git'
-          ]
+          src: 'dist'
         }]
       }
     },
-    useminPrepare: {
-      options: {
-        dest: 'dist'
-      },
-      dist: 'public/index.html'
-    },
-    htmlmin: {
-      dist: {
+    jadeUsemin: {
+      main: {
         options: {
-          collapseBooleanAttributes: true,
-          removeRedundantAttributes: true,
-          removeEmptyAttributes: true
+          tasks: {
+            js: ['concat', 'uglify', 'filerev'],
+            css: ['concat',  'cssmin', 'filerev']
+          },
+          dirTasks: 'filerev'
         },
-        files: [{
-          cwd: 'public',
-          expand: true,
-          src: '{,*/}*.html',
-          dest: 'dist'
-        }]
+        files: [
+          {
+            src: 'views/index.jade',
+            dest: 'dist/index.jade'
+          },
+          {
+            src: 'views/layout.jade',
+            dest: 'dist/layout.jade'
+          }
+        ]
       }
-    },
-    filerev: {
-      js: {
-        src: ['dist/js/{,*/}*.js'],
-        dest: 'dist/js'
-      },
-      css: {
-        src: ['dist/style/{,*/}*.css'],
-        dest: 'dist/style'
-      }
-    },
-    usemin: {
-      html: 'dist/index.html'
     },
     jshint: {
       options: {
@@ -85,11 +69,7 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('build', [
     'clean',
-    'useminPrepare',
-    'concat:generated',
-    'htmlmin',
-    'cssmin:generated',
-    'uglify:generated',
-    'filerev', 'usemin']);
+    'jadeUsemin'
+  ]);
   grunt.registerTask('test', ['jshint', 'mochaTest']);
 };
