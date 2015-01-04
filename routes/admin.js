@@ -21,7 +21,6 @@ router.get('/server/add', function (req, res) {
 router.post('/server/add', function (req, res) {
   var newServer = new Server({
     hostname: req.body.hostname,
-    capacity: req.body.capacity,
     link: req.body.link,
     price: req.body.price
   });
