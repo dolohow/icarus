@@ -33,7 +33,9 @@ router.post('/server/add', function (req, res) {
 });
 
 router.get('/user/add', function (req, res) {
-  res.render('admin/user/add');
+  Server.find({}, 'hostname', function (err, servers) {
+    res.render('admin/user/add', {servers: servers});
+  });
 });
 
 router.post('/user/add', function (req, res) {
