@@ -44,6 +44,7 @@ router.post('/user/add', function (req, res) {
         gg: req.body.gg,
         accounts: [{
           username: req.body.username,
+          password: req.body.password,
           hostname: server._id,
           allowedTorrents: req.body.allowedTorrents,
           allowedTransfer: req.body.allowedTransfer,

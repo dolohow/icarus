@@ -12,6 +12,7 @@ var userSchema = new mongoose.Schema({
   money: {type: Number, default: 0},
   accounts: [{
     username: String,
+    password: String,
     hostname: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Servers'
