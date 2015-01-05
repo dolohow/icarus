@@ -33,7 +33,7 @@ passwordless.addDelivery(
       encodeURIComponent(uidToSend),
       from: credentials.email.user,
       to: recipient,
-      subject: 'Welcome to Icarus!'
+      subject: 'Welcome to ' + credentials.domain
     }, function (err, message) {
       if (err) {
         console.log(err, message);

@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  form(action='/sendtoken' method='post')
-    input(name='user', type='email')
-    input(type='submit', value='Login')
+  if user
+    h1= user
+  else
+    form(action='/sendtoken' method='post')
+      input(name='user', type='email')
+      input(type='submit', value='Login')
