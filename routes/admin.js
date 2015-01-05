@@ -33,37 +33,33 @@ router.post('/server/add', function (req, res) {
 });
 
 router.get('/user/add', function (req, res) {
-  Server.find({}, 'hostname', function (err, servers) {
+  Server.find({}, '_id hostname', function (err, servers) {
     res.render('admin/user/add', {servers: servers});
   });
 });
 
 router.post('/user/add', function (req, res) {
-  Server.findOne({hostname: req.body.hostname}, '_id',
-    function (err, server) {
-      var newUser = new User({
-        user: req.body.user,
-        gg: req.body.gg,
-        accounts: [{
-          username: req.body.username,
-          password: req.body.password,
-          hostname: server._id,
-          allowedTorrents: req.body.allowedTorrents,
-          allowedTransfer: req.body.allowedTransfer,
-          allowedVNC: req.body.allowedVNC,
-          allowedCapacity: req.body.allowedCapacity,
-          price: req.body.price,
-          validity: req.body.validity
-        }]
-      });
-      newUser.save(function (err) {
-        if (err) {
-          console.log(err);
-        }
-        res.json({status: 'ok'});
-      });
+  var newUser = new User({
+    user: req.body.user,
+    gg: req.body.gg,
+    accounts: [{
+      username: req.body.username,
+      password: req.body.password,
+      hostname: req.body.hostname,
+      allowedTorrents: req.body.allowedTorrents,
+      allowedTransfer: req.body.allowedTransfer,
+      allowedVNC: req.body.allowedVNC,
+      allowedCapacity: req.body.allowedCapacity,
+      price: req.body.price,
+      validity: req.body.validity
+    }]
+  });
+  newUser.save(function (err) {
+    if (err) {
+      console.log(err);
     }
-  );
+    res.json({status: 'ok'});
+  });
 });
 
 module.exports = router;

@@ -8,7 +8,7 @@ block content
       input(type='text', name='password', placeholder='password')
       select(name='hostname')
         each server in servers
-          option(value=server.hostname) #{server.hostname}
+          option(value=server._id) #{server.hostname}
       input(type='number', name='allowedTorrents', placeholder='allowedTorrents')
       input(type='number', name='allowedTransfer', placeholder='allowedTransfer')
       input(type='checkbox', name='allowedVNC', placeholder='allowedVNC')
