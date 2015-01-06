@@ -42,6 +42,7 @@ router.post('/user/add', function (req, res) {
   var newUser = new User({
     user: req.body.user,
     gg: req.body.gg,
+    notes: req.body.notes,
     accounts: [{
       username: req.body.username,
       password: req.body.password,
