@@ -8,6 +8,7 @@ var User = require('../models/user');
 router.get('/', function (req, res) {
   User.find({})
     .populate('accounts.hostname')
+    .sort({'accounts.hostname': 'desc', 'accounts.username': 'asc'})
     .exec(function (err, users) {
       res.render('admin/index', {users: users});
     }
