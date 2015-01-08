@@ -8,7 +8,6 @@ var userSchema = new mongoose.Schema({
     trim: true,
     index: {unique: true}
   },
-  gg: Number,
   notes: String,
   money: {type: Number, default: 0},
   accounts: [{
