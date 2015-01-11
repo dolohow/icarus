@@ -11,7 +11,7 @@ var User = require('../models/user');
 router.get('/', function (req, res) {
   User.find({})
     .populate('accounts.hostname')
-    .sort({'accounts.hostname': 'desc', 'accounts.username': 'asc'})
+    .sort({'accounts.hostname': 'asc', 'accounts.username': 'asc'})
     .exec(function (err, users) {
       res.render('admin/index', {users: users});
     }
@@ -37,9 +37,12 @@ router.post('/server/add', function (req, res) {
 });
 
 router.get('/user/add', function (req, res) {
-  Server.find({}, '_id hostname', function (err, servers) {
-    res.render('admin/user/add', {servers: servers});
-  });
+  Server.find({}, '_id hostname')
+    .sort({'hostname': 'asc'})
+    .exec(function (err, servers) {
+      res.render('admin/user/add', {servers: servers});
+    }
+  );
 });
 
 router.post('/user/add', function (req, res) {
