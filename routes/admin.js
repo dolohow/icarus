@@ -1,6 +1,9 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
+var iconv = require('iconv-lite');
+
+var csv = require('../lib/csv');
 
 var Server = require('../models/server');
 var User = require('../models/user');
@@ -61,6 +64,19 @@ router.post('/user/add', function (req, res) {
     }
     res.json({status: 'ok'});
   });
+});
+
+router.get('/payment/add', function (req, res) {
+  res.render('admin/payment');
+});
+
+router.post('/payment/add', function (req, res) {
+  if (req.files.mbank.fieldname) {
+    var data = iconv.decode(req.files.mbank.buffer, 'cp1250');
+    csv.parse(data, function () {
+      res.json({status: 'ok'});
+    });
+  }
 });
 
 module.exports = router;

@@ -14,6 +14,7 @@ var email = require('emailjs');
 var mongoose = require('mongoose');
 var i18n = require('i18n');
 var basicAuth = require('http-auth');
+var multer = require('multer');
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
@@ -66,6 +67,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(i18n.init);
+app.use(multer({inMemory: true}));
 app.use(session({
   secret: credentials.sessionSecret,
   resave: false,

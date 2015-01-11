@@ -16,7 +16,7 @@ describe('Authentication', function () {
     done();
   });
   var url = 'http://localhost:5000';
-  it('it should send email', function (done) {
+  it('should send email', function (done) {
     app.__set__('smtpServer', {
       send: function (obj, callback) {
         assert.equal(obj.to, 'email@email.com', 'Email differs');
