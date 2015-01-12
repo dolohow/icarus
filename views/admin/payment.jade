@@ -1,6 +1,11 @@
+mixin multipartForm(name)
+  .form
+    p= name
+    form(method='post' enctype='multipart/form-data')
+      input(type='file' name=name)
+      input(type='submit' value='OK')
+
 extends layout
 block content
-  .form
-    form(method='post' enctype='multipart/form-data')
-      input(type='file' name='mbank')
-      input(type='submit' value='OK')
+    +multipartForm('mbank')
+    +multipartForm('paypal')

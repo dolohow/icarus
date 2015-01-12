@@ -74,10 +74,22 @@ router.get('/payment/add', function (req, res) {
 });
 
 router.post('/payment/add', function (req, res) {
-  if (req.files.mbank.fieldname) {
-    var data = iconv.decode(req.files.mbank.buffer, 'cp1250');
-    csv.parse(data, function () {
-      res.json({status: 'ok'});
+  if (req.files.mbank) {
+    var mbank = iconv.decode(req.files.mbank.buffer, 'cp1250');
+    csv.parse.mbank(mbank, function (err, data) {
+      if (err) {
+        res.json({err: err});
+      }
+      res.json(data);
+    });
+  }
+  if (req.files.paypal) {
+    var paypal = iconv.decode(req.files.paypal.buffer, 'cp1250');
+    csv.parse.paypal(paypal, function (err, data) {
+      if (err) {
+        res.json({err: err});
+      }
+      res.json(data);
     });
   }
 });
