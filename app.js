@@ -42,7 +42,7 @@ passwordless.addDelivery(
       }
       callback(err);
     });
-  }, {ttl: 1000 * 60 * 24 * 7});
+  });
 
 i18n.configure({
   locales: ['en', 'pl'],
