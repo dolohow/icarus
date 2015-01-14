@@ -1,0 +1,17 @@
+{
+  "name": "icarus",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dolohow/icarus",
+  "authors": [
+    "Łukasz Żarnowiecki <dolohow@outlook.com>"
+  ],
+  "license": "GPLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/vendor",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
