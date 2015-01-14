@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var iconv = require('iconv-lite');
+var async = require('async');
 
 var csv = require('../lib/csv');
 
@@ -65,6 +66,59 @@ router.post('/user/add', function (req, res) {
     if (err) {
       console.log(err);
     }
+    res.json({status: 'ok'});
+  });
+});
+
+router.get('/user/edit/:id', function (req, res) {
+  async.parallel([
+      function (callback) {
+        User.findById(req.params.id)
+          .populate('accounts.hostname')
+          .exec(function (err, user) {
+            if (err) {
+              callback(err);
+            }
+            callback(null, user);
+          }
+        );
+      },
+      function (callback) {
+        Server.find({})
+          .sort({'hostname': 'asc'})
+          .exec(function (err, servers) {
+            if (err) {
+              callback(err);
+            }
+            callback(null, servers);
+          });
+      }
+    ],
+    function (err, results) {
+      console.log(results);
+      res.render('admin/user/edit', {user: results[0], servers: results[1]});
+    }
+  );
+});
+
+router.post('/user/edit/:id', function (req, res) {
+  User.update({_id: req.params.id}, {
+    $set: {
+      user: req.body.user,
+      notes: req.body.notes,
+      accounts: [{
+        username: req.body.username,
+        password: req.body.password,
+        hostname: req.body.hostname,
+        allowedTorrents: req.body.allowedTorrents,
+        allowedTransfer: req.body.allowedTransfer,
+        allowedVNC: req.body.allowedVNC,
+        allowedCapacity: req.body.allowedCapacity,
+        price: req.body.price,
+        validity: req.body.validity
+      }]
+    }
+  }, function () {
     res.json({status: 'ok'});
   });
 });
