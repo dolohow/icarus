@@ -1,1 +1,10 @@
-{}
+{
+	"Hostname %s": "Hostname %s",
+	"Username %s": "Nazwa użytkownika %s",
+	"Active torrents %s": "Aktywnych torrentów %s",
+	"Allowed upload %s": "Dozowolony upload %s",
+	"VNC %s": "VNC %s",
+	"Capacity %s ": "Pojemność dysku %s ",
+	"Price %s": "Cena %s",
+	"Validity": "Ważność"
+}

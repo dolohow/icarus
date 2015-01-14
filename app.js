@@ -19,6 +19,7 @@ var multer = require('multer');
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 var admin = require('./routes/admin');
+var panel = require('./routes/panel');
 
 var credentials = require('./credentials');
 
@@ -85,8 +86,7 @@ app.use(passwordless.acceptToken({successRedirect: '/'}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/', auth);
-app.use('/panel', passwordless.restricted(),
-  express.static(path.join(__dirname, 'public/panel')));
+app.use('/panel', passwordless.restricted(), panel);
 app.use('/admin', basicAuth.connect(basic), admin);
 
 // catch 404 and forward to error handler
