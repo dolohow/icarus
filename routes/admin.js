@@ -95,7 +95,6 @@ router.get('/user/edit/:id', function (req, res) {
       }
     ],
     function (err, results) {
-      console.log(results);
       res.render('admin/user/edit', {user: results[0], servers: results[1]});
     }
   );

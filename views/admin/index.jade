@@ -4,7 +4,6 @@ block content
   table
     tr
       th User
-      th Notatka
       th Username
       th Hostname
       th Aktywnych torrentów
@@ -15,9 +14,8 @@ block content
       th Ważność
       each user in users
         each account in user.accounts
-          tr
+          tr(title=user.notes)
             td= user.user
-            td= user.notes
             td= account.username
             td= account.hostname.hostname
             td= account.allowedTorrents
@@ -28,4 +26,3 @@ block content
             td= account.validity
             td: a(href='/admin/user/edit/#{user._id}') Edytuj
   script(type='text/javascript', src='/js/main.js')
-

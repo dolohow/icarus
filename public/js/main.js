@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var dates = document.querySelectorAll('td:nth-child(10)');
+  var dates = document.querySelectorAll('td:nth-child(9)');
   var i;
   var d;
   var currentDate = new Date();
