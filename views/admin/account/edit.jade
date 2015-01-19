@@ -1,0 +1,19 @@
+extends ../layout
+block content
+  .form
+    form(method='post')
+      h2= user
+      input(type='text', name='username', value=account.username)
+      input(type='text', name='password', value=account.password)
+      select(name='hostname')
+        option(value=account.hostname._id) #{account.hostname.hostname}
+        each server in servers
+          option(value=server._id) #{server.hostname}
+      input(type='number', name='allowedTorrents', value=account.allowedTorrents)
+      input(type='number', name='allowedTransfer', value=account.allowedTransfer)
+      input(type='checkbox', name='allowedVNC', checked=account.allowedVNC)
+      input(type='number', name='allowedCapacity', value=account.allowedCapacity)
+      input(type='number', name='price', value=account.price)
+      //TODO: Transfer data into valid format (Jade will do after 2.0)
+      input(type='date', name='validity', value=account.validity)
+      input(type='submit', name='OK')

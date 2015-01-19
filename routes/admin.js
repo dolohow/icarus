@@ -37,20 +37,39 @@ router.post('/server/add', function (req, res) {
   });
 });
 
-router.get('/user/add', function (req, res) {
-  Server.find({}, '_id hostname')
-    .sort({'hostname': 'asc'})
-    .exec(function (err, servers) {
-      res.render('admin/user/add', {servers: servers});
-    }
-  );
+router.get('/account/add', function (req, res) {
+  async.parallel([
+      function (callback) {
+        Server.find({}, '_id hostname')
+          .sort({'hostname': 'asc'})
+          .exec(function (err, servers) {
+            if (err) {
+              return callback(err);
+            }
+            callback(null, servers);
+          }
+        );
+      },
+      function (callback) {
+        User.find({}, '_id user')
+          .sort({'user': 'asc'})
+          .exec(function (err, users) {
+            if (err) {
+              return callback(err);
+            }
+            callback(null, users);
+          });
+      }
+    ],
+    function (err, results) {
+      res.render('admin/account/add', {servers: results[0], users: results[1]});
+    });
+
 });
 
-router.post('/user/add', function (req, res) {
-  var newUser = new User({
-    user: req.body.user,
-    notes: req.body.notes,
-    accounts: [{
+router.post('/account/add', function (req, res) {
+  User.findById(req.body.user, function (err, user) {
+    user.accounts.push({
       username: req.body.username,
       password: req.body.password,
       hostname: req.body.hostname,
@@ -60,24 +79,24 @@ router.post('/user/add', function (req, res) {
       allowedCapacity: req.body.allowedCapacity,
       price: req.body.price,
       validity: req.body.validity
-    }]
-  });
-  newUser.save(function (err) {
-    if (err) {
-      console.log(err);
-    }
-    res.json({status: 'ok'});
+    });
+    user.save(function (err) {
+      if (err) {
+        console.log(err);
+      }
+      res.json({status: 'ok'});
+    });
   });
 });
 
-router.get('/user/edit/:id', function (req, res) {
+router.get('/account/edit/:id', function (req, res) {
   async.parallel([
       function (callback) {
-        User.findById(req.params.id)
+        User.findOne({'accounts._id': req.params.id}, 'user accounts.$')
           .populate('accounts.hostname')
           .exec(function (err, user) {
             if (err) {
-              callback(err);
+              return callback(err);
             }
             callback(null, user);
           }
@@ -88,34 +107,34 @@ router.get('/user/edit/:id', function (req, res) {
           .sort({'hostname': 'asc'})
           .exec(function (err, servers) {
             if (err) {
-              callback(err);
+              return callback(err);
             }
             callback(null, servers);
           });
       }
     ],
     function (err, results) {
-      res.render('admin/user/edit', {user: results[0], servers: results[1]});
+      res.render('admin/account/edit', {
+        account: results[0].accounts[0],
+        servers: results[1],
+        user: results[0].user
+      });
     }
   );
 });
 
-router.post('/user/edit/:id', function (req, res) {
-  User.update({_id: req.params.id}, {
+router.post('/account/edit/:id', function (req, res) {
+  User.update({'accounts._id': req.params.id}, {
     $set: {
-      user: req.body.user,
-      notes: req.body.notes,
-      accounts: [{
-        username: req.body.username,
-        password: req.body.password,
-        hostname: req.body.hostname,
-        allowedTorrents: req.body.allowedTorrents,
-        allowedTransfer: req.body.allowedTransfer,
-        allowedVNC: req.body.allowedVNC,
-        allowedCapacity: req.body.allowedCapacity,
-        price: req.body.price,
-        validity: req.body.validity
-      }]
+      'accounts.$.username': req.body.username,
+      'accounts.$.password': req.body.password,
+      'accounts.$.hostname': req.body.hostname,
+      'accounts.$.allowedTorrents': req.body.allowedTorrents,
+      'accounts.$.allowedTransfer': req.body.allowedTransfer,
+      'accounts.$.allowedVNC': req.body.allowedVNC,
+      'accounts.$.allowedCapacity': req.body.allowedCapacity,
+      'accounts.$.price': req.body.price,
+      'accounts.$.validity': req.body.validity
     }
   }, function () {
     res.json({status: 'ok'});

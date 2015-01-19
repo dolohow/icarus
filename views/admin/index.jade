@@ -16,7 +16,7 @@ block content
         each account in user.accounts
           tr(title=user.notes)
             td= user.user
-            td= account.username
+            td: a(href='/admin/account/edit/#{account._id}') #{account.username}
             td= account.hostname.hostname
             td= account.allowedTorrents
             td= account.allowedTransfer
@@ -24,5 +24,4 @@ block content
             td= account.allowedCapacity
             td= account.price
             td= account.validity
-            td: a(href='/admin/user/edit/#{user._id}') Edytuj
   script(type='text/javascript', src='/js/main.js')
