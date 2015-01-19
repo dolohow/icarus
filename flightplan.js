@@ -25,8 +25,14 @@ plan.local(function (local) {
 
 plan.remote(function (remote) {
   var nodeVersion = 'v0.10.35';
-  remote.exec('aptitude install git make gcc g++ sudo nginx mongodb python2.7' +
-              '-y');
+
+  remote.exec('apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10');
+  remote.exec('echo \'' +
+  'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen\'' +
+  ' | sudo tee /etc/apt/sources.list.d/mongodb.list');
+  remote.exec('aptitude update');
+  remote.exec('aptitude install git make gcc g++ sudo nginx python2.7 ' +
+  'mongodb-org -y');
   remote.exec('wget http://nodejs.org/dist/' + nodeVersion + '/node-' +
   nodeVersion + '-linux-x64.tar.gz');
   remote.exec('tar -xzf node-' + nodeVersion + '-linux-x64.tar.gz');
