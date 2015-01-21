@@ -24,4 +24,5 @@ block content
             td= account.allowedCapacity
             td= account.price
             td= account.validity
+            td: a(href='/admin/account/remove/#{account._id}') Usuń
   script(type='text/javascript', src='/js/main.js')

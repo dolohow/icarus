@@ -141,6 +141,20 @@ router.post('/account/edit/:id', function (req, res) {
   });
 });
 
+router.get('/account/remove/:id', function (req, res) {
+  User.findOne({'accounts._id': req.params.id}, 'accounts.$.username',
+    function (err, user) {
+    res.render('admin/account/remove', {username: user.accounts[0].username});
+  });
+});
+
+router.post('/account/remove/:id', function (req, res) {
+  User.findOne({'accounts._id': req.params.id})
+    .remove(function () {
+      res.redirect('/admin');
+    });
+});
+
 router.get('/payment/add', function (req, res) {
   res.render('admin/payment');
 });
