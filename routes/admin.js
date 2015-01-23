@@ -144,15 +144,20 @@ router.post('/account/edit/:id', function (req, res) {
 router.get('/account/remove/:id', function (req, res) {
   User.findOne({'accounts._id': req.params.id}, 'accounts.$.username',
     function (err, user) {
-    res.render('admin/account/remove', {username: user.accounts[0].username});
-  });
+      res.render('admin/account/remove', {username: user.accounts[0].username});
+    });
 });
 
 router.post('/account/remove/:id', function (req, res) {
-  User.findOne({'accounts._id': req.params.id})
-    .remove(function () {
+  User.findOne({'accounts._id': req.params.id}, function (err, user) {
+    user.accounts.id(req.params.id).remove();
+    user.save(function (err) {
+      if (err) {
+        console.log(err);
+      }
       res.redirect('/admin');
     });
+  });
 });
 
 router.get('/payment/add', function (req, res) {
