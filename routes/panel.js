@@ -11,4 +11,20 @@ router.get('/', function (req, res) {
     });
 });
 
+router.get('/account/:id', function (req, res) {
+  User.findOne({user: req.user, 'accounts._id': req.params.id},
+    'user accounts.$')
+    .populate('accounts.hostname')
+    .exec(function (err, user) {
+      if (err) {
+        console.log(err);
+        return res.json({msg: 'Error'});
+      }
+      if (user) {
+        return res.render('panel/account', {account: user.accounts[0]});
+      }
+      res.json({msg: 'Account not exists'});
+    });
+});
+
 module.exports = router;

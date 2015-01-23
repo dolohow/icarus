@@ -2,12 +2,14 @@ extends ../layout
 
 block content
   h1= user
-  each account in data.accounts
-    p= __('Hostname %s', account.hostname.hostname)
-    p= __('Username %s', account.username)
-    p= __('Active torrents %s', account.allowedTorrents)
-    p= __('Allowed upload %s', account.allowedTransfer)
-    p= __('VNC %s', account.allowedVNC)
-    p= __('Capacity %s ', account.allowedCapacity)
-    p= __('Price %s', account.price)
-    p #{__('Validity')} #{account.validity}
+  if data
+    h2= __('Accounts')
+    ul
+      each account in data.accounts
+        li: a(href='/panel/account/' + account._id) #{account.username}
+
+  else
+    h2= __('You don\'t have any accounts')
+
+  h2= __('Wallet')
+  p #{data.money} zł

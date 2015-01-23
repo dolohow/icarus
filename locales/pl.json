@@ -6,5 +6,11 @@
 	"VNC %s": "VNC %s",
 	"Capacity %s ": "Pojemność dysku %s ",
 	"Price %s": "Cena %s",
-	"Validity": "Ważność"
+	"Validity": "Ważność",
+	"Accounts": "Accounts",
+	"You don't have any accounts": "You don't have any accounts",
+	"Validity %s": "Validity %s",
+	"Remote desktop %s": "Remote desktop %s",
+	"Money": "Money",
+	"Wallet": "Wallet"
 }
