@@ -8,8 +8,8 @@ describe('CSV Parser', function () {
       var string = '2010-09-10;;;;;;;;\n2010-09-09;;;;;;;;';
       csv.parse.mbank(string, function (err, data) {
         assert.lengthOf(data, 2);
-        assert.lengthOf(data[0], 9);
-        assert.lengthOf(data[1], 9);
+        assert.isObject(data[0]);
+        assert.isObject(data[1]);
         done();
       });
     });
