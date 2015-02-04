@@ -162,18 +162,40 @@ router.post('/account/remove/:id', function (req, res) {
   });
 });
 
-router.get('/payment/add', function (req, res) {
+router.get('/payment', function (req, res) {
   res.render('admin/payment');
 });
 
-router.post('/payment/add', function (req, res) {
+router.post('/payment', function (req, res) {
   if (req.files.mbank) {
     var mbank = iconv.decode(req.files.mbank.buffer, 'cp1250');
-    csv.parse.mbank(mbank, function (err, data) {
+    csv.parse.mbank(mbank, function (err, transfers) {
       if (err) {
         res.json({err: err});
       }
-      res.json(data);
+      async.series([
+          function (callback) {
+            User.find({}, '_id user')
+              .sort({'user': 'asc'})
+              .exec(function (err, users) {
+                if (err) {
+                  console.log(err);
+                }
+                callback(null, users);
+              });
+          },
+          function (callback) {
+            for (var i = transfers.length - 1; i >= 0; i--) {
+              User.addTransfer(transfers[i]);
+            }
+            callback();
+          }
+        ],
+        function (err, results) {
+          res.render('admin/payment', {
+            users: results[0],
+            transfers: transfers});
+        });
     });
   }
   if (req.files.paypal) {
@@ -185,6 +207,18 @@ router.post('/payment/add', function (req, res) {
       res.json(data);
     });
   }
+});
+
+router.post('/payment/add', function (req, res) {
+  User.findById(req.body.user, function (err, user) {
+    if (user.accountNumbers.indexOf(req.body.accountNumber) !== -1) {
+      return res.json({msg: 'Account number already exists'});
+    }
+    user.accountNumbers.push(req.body.accountNumber);
+    user.save(function () {
+      res.json({msg: 'OK'});
+    });
+  });
 });
 
 module.exports = router;
