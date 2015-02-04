@@ -92,7 +92,8 @@ router.post('/account/add', function (req, res) {
 router.get('/account/edit/:id', function (req, res) {
   async.parallel([
       function (callback) {
-        User.findOne({'accounts._id': req.params.id}, 'user accounts.$')
+        User.findOne({'accounts._id': req.params.id},
+          'user accounts.$ transfers')
           .populate('accounts.hostname')
           .exec(function (err, user) {
             if (err) {
@@ -116,6 +117,7 @@ router.get('/account/edit/:id', function (req, res) {
     function (err, results) {
       res.render('admin/account/edit', {
         account: results[0].accounts[0],
+        transfers: results[0].transfers,
         servers: results[1],
         user: results[0].user
       });

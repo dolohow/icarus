@@ -17,3 +17,15 @@ block content
       //TODO: Transfer data into valid format (Jade will do after 2.0)
       input(type='date', name='validity', value=account.validity)
       input(type='submit', name='OK')
+  table
+    tr
+      th Data
+      th Tytuł
+      th Nadawca
+      th Kwota
+      each transfer in transfers
+        tr
+          td= transfer.date
+          td= transfer.title
+          td= transfer.sender
+          td= transfer.amount
