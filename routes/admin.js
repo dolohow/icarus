@@ -117,7 +117,9 @@ router.get('/account/edit/:id', function (req, res) {
     function (err, results) {
       res.render('admin/account/edit', {
         account: results[0].accounts[0],
-        transfers: results[0].transfers,
+        transfers: results[0].transfers.sort(function (d1, d2) {
+          return d1.date - d2.date;
+        }),
         servers: results[1],
         user: results[0].user
       });
