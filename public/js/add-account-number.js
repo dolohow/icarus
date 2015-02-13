@@ -20,7 +20,6 @@
       }
     };
   }
-
   var buttons = document.querySelectorAll('td:nth-child(6)');
   for (var i = 0; buttons.length; i++) {
     buttons[i].addEventListener('click', sendTransfer(buttons[i]), false);
