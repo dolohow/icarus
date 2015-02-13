@@ -25,7 +25,8 @@
     "multer": "^0.1.6",
     "passwordless": "^1.0.8",
     "passwordless-mongostore": "^0.1.0",
-    "serve-favicon": "^2.2.0"
+    "serve-favicon": "^2.2.0",
+    "ssh2": "^0.4.4"
   },
   "devDependencies": {
     "chai": "^1.10.0",
