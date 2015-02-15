@@ -1,33 +1,37 @@
-server_tokens off;
-
-add_header X-Frame-Options SAMEORIGIN;
-add_header X-Content-Type-Options nosniff;
-add_header X-XSS-Protection "1; mode=block";
-
 server {
-	listen 80;
-	server_name shell.woox.pl;
-	return 301 https://$server_name$request_uri;
+        listen 80;
+        server_name shell.woox.pl;
+        rewrite ^(.*) https://$host$1 permanent;
+        location ~ \.(php|html)$ {
+            deny  all;
+        }
+
+        access_log /dev/null;
+        error_log /dev/null;
 }
 server {
-	listen 443 ssl;
-	server_name shell.woox.pl;
+        ssl on;
+        listen 443 default ssl;
+        server_name shell.woox.pl;
 
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-	ssl_certificate  /etc/nginx/ssl/server.crt;
-	ssl_certificate_key /etc/nginx/ssl/server.key;
-	
-	# 2048 or more
-	ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-	ssl_prefer_server_ciphers on;
-	ssl_ciphers "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA256:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EDH+aRSA+AESGCM:EDH+aRSA+SHA256:EDH+aRSA:EECDH:!aNULL:!eNULL:!MEDIUM:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED";
+        root /home/shell/icarus/public;
 
-	location / {
-		proxy_pass http://localhost:5000;
-		proxy_http_version 1.1;
-		proxy_set_header Upgrade $http_upgrade;
-		proxy_set_header Connection 'upgrade';
-		proxy_set_header Host $host;
-		proxy_cache_bypass $http_upgrade;
-	}
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_certificate  /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+
+        passenger_enabled on;
+        passenger_min_instances 5;
+        passenger_startup_file bin/www;
+        passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+        passenger_nodejs /opt/node/node-v0.10.35-linux-x64/bin/node;
+        passenger_set_cgi_param HTTPS on;
+        limit_req zone=one burst=5;
+
+        ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+        ssl_prefer_server_ciphers on;
+        ssl_ciphers "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA256:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EDH+aRSA+AESGCM:EDH+aRSA+SHA256:EDH+aRSA:EECDH:!aNULL:!eNULL:!MEDIUM:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED";
+
+        access_log /home/shell/icarus/nginx.access.log;
+        error_log /home/shell/icarus/nginx.error.log;
 }

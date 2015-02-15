@@ -2,6 +2,8 @@
 .idea
 node_modules/
 *.log
+logs/
+tmp/
 dist/
 bower_components/
 *.tmp
