@@ -57,8 +57,9 @@ plan.remote('deploy', function (remote) {
   remote.exec('git clone https://github.com/dolohow/icarus.git');
   remote.exec('echo PATH=$PATH:/opt/node/bin > ~/.profile');
   remote.exec('cd icarus ; ' +
-              'PATH=$PATH:/opt/node/bin PYTHON=python2.7 npm install');
-  remote.exec('/home/shell/icarus/tmp/restart.txt');
+  'PATH=$PATH:/opt/node/bin PYTHON=python2.7 npm install ; ' +
+  'mkdir -p tmp ; ' +
+  'touch tmp/restart.txt');
 });
 
 plan.local('deploy', function (local) {
