@@ -24,7 +24,7 @@ server {
         passenger_min_instances 5;
         passenger_startup_file bin/www;
         passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
-        passenger_nodejs /opt/node/node-v0.10.35-linux-x64/bin/node;
+        passenger_nodejs /opt/node/bin/node;
         passenger_set_cgi_param HTTPS on;
         limit_req zone=one burst=5;
 

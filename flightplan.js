@@ -32,12 +32,12 @@ plan.remote(function (remote) {
   ' | sudo tee /etc/apt/sources.list.d/mongodb.list');
 
   /* NodeJS */
-  var nodeVersion = 'v0.10.35';
+  var nodeVersion = 'v0.12.0';
   remote.exec('wget http://nodejs.org/dist/' + nodeVersion + '/node-' +
   nodeVersion + '-linux-x64.tar.gz');
-  remote.exec('tar -xzf node-' + nodeVersion + '-linux-x64.tar.gz');
-  remote.exec('cp -r node-' + nodeVersion + '-linux-x64 /opt/node');
-  //remote.exec('echo PATH=$PATH:/opt/node/bin > ~/.profile');
+  remote.exec('tar -xzf node-' + nodeVersion + '-linux-x64.tar.gz -C /opt');
+  remote.exec('mv /opt/node-' + nodeVersion + '-linux-x64 /opt/node');
+  remote.exec('echo PATH=$PATH:/opt/node/bin > ~/.profile');
   remote.exec('PATH=$PATH:/opt/node/bin npm install -g grunt-cli');
 
   /* Passenger */
