@@ -1,22 +1,19 @@
 'use strict';
 var plan = require('flightplan');
+var fs = require('fs');
 var credentials = require('./credentials');
 
 /* TODO: Does targe should be merged, but no idea how */
 plan.target('install-dep', [{
   host: 'shell.woox.pl',
   username: 'root',
-  /* TODO: Find why this is not working */
-  //privateKey: require('fs').readFileSync('~/.ssh/id_rsa'),
-  /* TODO: Temporary solution */
-  password: credentials.ssh.root
+  privateKey: process.env.HOME + '/.ssh/id_rsa'
 }]);
 
 plan.target('production', [{
   host: 'shell.woox.pl',
   username: 'shell',
-  //privateKey: require('fs').readFileSync('~/.ssh/id_rsa'),
-  password: credentials.ssh.shell
+  privateKey: process.env.HOME + '/.ssh/id_rsa'
 }]);
 
 plan.local(function (local) {
