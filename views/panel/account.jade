@@ -1,16 +1,5 @@
-mixin isSet(string, value)
-  if value
-    p= __(string, value)
-
 extends ../layout
 
 block content
-  p= __('Hostname %s', account.hostname.hostname)
-  p= __('Username %s', account.username)
-  +isSet('Active torrents %s', account.allowedTorrents)
-  +isSet('Allowed upload %s', account.allowedTransfer)
-  +isSet('Remote desktop %s', account.allowedVNC)
-  +isSet('Capacity %s ', account.allowedCapacity)
-  +isSet('Price %s', account.price)
-  p #{__('Validity')} #{account.validity}
-  script(type='text/javascript', src='/js/panel.js')
+  script(src='/vendor/mithril/mithril.js')
+  script(src='/js/mvc/account.js')

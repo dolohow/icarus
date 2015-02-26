@@ -6,7 +6,7 @@ block content
     h2= __('Accounts')
     ul
       each account in data.accounts
-        li: a(href='/panel/account/' + account._id) #{account.username}
+        li: a(href='/panel/account/' + account.username) #{account.username}
 
   else
     h2= __('You don\'t have any accounts')

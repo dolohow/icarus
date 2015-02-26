@@ -13,5 +13,6 @@
     "tests"
   ],
   "dependencies": {
+    "mithril": "~0.1.30"
   }
 }
