@@ -1,7 +1,5 @@
 'use strict';
 var plan = require('flightplan');
-var fs = require('fs');
-var credentials = require('./credentials');
 
 /* TODO: Does targe should be merged, but no idea how */
 plan.target('install-dep', [{
