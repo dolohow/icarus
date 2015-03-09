@@ -10,13 +10,25 @@ var Server = require('../models/server');
 var User = require('../models/user');
 
 router.get('/', function (req, res) {
+  res.render('admin/index');
+});
+
+router.get('/users', function (req, res) {
   User.find({})
     .populate('accounts.hostname')
     .sort({'accounts.hostname': 'asc', 'accounts.username': 'asc'})
     .exec(function (err, users) {
-      res.render('admin/index', {users: users});
+      res.json(users);
     }
   );
+});
+
+router.get('/servers', function (req, res) {
+  Server.find({})
+    .sort({hostname: 'asc'})
+    .exec(function (err, servers) {
+      res.json(servers);
+    });
 });
 
 router.get('/server/add', function (req, res) {

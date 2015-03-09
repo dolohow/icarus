@@ -1,28 +1,5 @@
 extends layout
 block content
-  h1 Serwery
-  table
-    tr
-      th User
-      th Username
-      th Hostname
-      th Aktywnych torrentów
-      th Transfer
-      th VNC
-      th Dysk
-      th Cena
-      th Ważność
-      each user in users
-        each account in user.accounts
-          tr(title=user.notes)
-            td= user.user
-            td: a(href='/admin/account/edit/#{account._id}') #{account.username}
-            td= account.hostname.hostname
-            td= account.allowedTorrents
-            td= account.allowedTransfer
-            td= account.allowedVNC
-            td= account.allowedCapacity
-            td= account.price
-            td= account.validity
-            td: a(href='/admin/account/remove/#{account._id}') Usuń
-  script(type='text/javascript', src='/js/main.js')
+  #content
+  script(src='/vendor/mithril/mithril.js')
+  script(src='/js/mvc/admin.js')
