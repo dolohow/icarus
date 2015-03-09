@@ -35,6 +35,9 @@ plan.remote(function (remote) {
   remote.exec('echo PATH=$PATH:/opt/node/bin > ~/.profile');
   remote.exec('PATH=$PATH:/opt/node/bin npm install -g grunt-cli');
 
+  /* Node deps */
+  remote.exec('npm install -g bower');
+
   /* Passenger */
   remote.exec('apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ' +
   '561F9B9CAC40B2F7');
@@ -56,6 +59,7 @@ plan.remote('deploy', function (remote) {
   remote.exec('echo PATH=$PATH:/opt/node/bin > ~/.profile');
   remote.exec('cd icarus ; ' +
   'PATH=$PATH:/opt/node/bin PYTHON=python2.7 npm install ; ' +
+  'bower install' +
   'mkdir -p tmp ; ' +
   'touch tmp/restart.txt');
 });
