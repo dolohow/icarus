@@ -1,0 +1,12 @@
+#!/bin/bash
+
+HOST=$1
+FILENAME=$(date +'%Y-%m-%dT%H%m%S').tar.gz
+
+mongodump
+tar -zcvf $FILENAME dump
+
+scp $FILENAME $HOST
+
+rm $FILENAME
+rm -r dump
