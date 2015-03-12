@@ -1,13 +1,6 @@
 'use strict';
 var plan = require('flightplan');
 
-/* TODO: Does targe should be merged, but no idea how */
-plan.target('install-dep', [{
-  host: 'shell.woox.pl',
-  username: 'root',
-  privateKey: process.env.HOME + '/.ssh/id_rsa'
-}]);
-
 plan.target('production', [{
   host: 'shell.woox.pl',
   username: 'shell',
@@ -19,7 +12,7 @@ plan.local(function (local) {
   local.transfer('config/nginx-node-proxy', '/etc/nginx/sites-enabled/');
 });
 
-plan.remote(function (remote) {
+plan.remote('install-dep', function (remote) {
   /* MongoDB */
   remote.exec('apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10');
   remote.exec('echo \'' +
