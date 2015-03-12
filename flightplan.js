@@ -59,3 +59,12 @@ plan.remote('deploy', function (remote) {
 plan.local('deploy', function (local) {
   local.transfer('credentials.js', '/home/shell/icarus/credentials.js');
 });
+
+plan.remote('update', function (remote) {
+  remote.exec('cd icarus;' +
+  'git pull;' +
+  'PATH=$PATH:/opt/node/bin PYTHON=python2.7 npm install;' +
+  'PATH=$PATH:/opt/node/bin bower install;' +
+  'mkdir -p tmp;' +
+  'touch tmp/restart.txt');
+});
