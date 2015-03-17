@@ -17,7 +17,7 @@ PYTHON=python2.7 npm install
 ```
 
 ## Configuration
-You should create a file `credentials.js` in your root directory with a exported
+You should create a file `config.js` in your root directory with a exported
 variables `passwordless`, `email`, `mongodb`, `domain`, `sessionSecret`,
 `basicAuth`, `ssh`.
 

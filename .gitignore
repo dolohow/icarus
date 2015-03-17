@@ -7,5 +7,5 @@ tmp/
 dist/
 bower_components/
 *.tmp
-credentials.js
+config.js
 public/vendor

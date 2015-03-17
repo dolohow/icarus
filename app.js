@@ -21,21 +21,21 @@ var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var panel = require('./routes/panel');
 
-var credentials = require('./credentials');
+var config = require('./config');
 
-var smtpServer = email.server.connect(credentials.email);
-passwordless.init(new MongoStore(credentials.passwordless));
-mongoose.connect(credentials.mongodb);
+var smtpServer = email.server.connect(config.email);
+passwordless.init(new MongoStore(config.passwordless));
+mongoose.connect(config.mongodb);
 
 passwordless.addDelivery(
   function (tokenToSend, uidToSend, recipient, callback) {
     smtpServer.send({
       text: 'Hello!\nAccess your account here: http://' +
-      credentials.domain + '/?token=' + tokenToSend + '&uid=' +
+      config.domain + '/?token=' + tokenToSend + '&uid=' +
       encodeURIComponent(uidToSend),
-      from: credentials.email.user,
+      from: config.email.user,
       to: recipient,
-      subject: 'Welcome to ' + credentials.domain
+      subject: 'Welcome to ' + config.domain
     }, function (err, message) {
       if (err) {
         console.log(err, message);
@@ -52,8 +52,8 @@ i18n.configure({
 var basic = basicAuth.basic({
     realm: 'Login is required'
   }, function (username, password, callback) {
-    callback(username === credentials.basicAuth.username &&
-    password === credentials.basicAuth.password);
+    callback(username === config.basicAuth.username &&
+    password === config.basicAuth.password);
   }
 );
 
@@ -70,7 +70,7 @@ app.use(expressValidator());
 app.use(i18n.init);
 app.use(multer({inMemory: true}));
 app.use(session({
-  secret: credentials.sessionSecret,
+  secret: config.sessionSecret,
   resave: false,
   saveUninitialized: true,
   store: new MongoStoreSession({mongooseConnection: mongoose.connection})
