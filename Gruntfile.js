@@ -3,6 +3,16 @@ module.exports = function (grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
+    nodemon: {
+      dev: {
+        script: 'bin/www',
+        options: {
+          ignore: ['node_modules/**', 'dist', 'public', 'tests',
+          'Gruntfile.js', 'flightplan.js'],
+          ext: 'js'
+        }
+      }
+    },
     clean: {
       build: {
         files: [{
@@ -40,6 +50,12 @@ module.exports = function (grunt) {
       all: ['{,*/}*.js', 'bin/www', 'public/**/*js']
     },
     watch: {
+      scripts: {
+        files: ['public/**/*', 'views/**/*'],
+        options: {
+          livereload: true
+        }
+      },
       test: {
         files: ['{,*/}*.js', 'bin/www'],
         tasks: ['test']

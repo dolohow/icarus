@@ -42,6 +42,7 @@
     "grunt-filerev": "^2.1.2",
     "grunt-jade-usemin": "^0.11.1",
     "grunt-mocha-test": "^0.12.4",
+    "grunt-nodemon": "^0.4.0",
     "matchdep": "^0.3.0",
     "mocha": "^2.0.1",
     "rewire": "^2.1.3",
