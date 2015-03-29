@@ -3,7 +3,6 @@ block content
   form(method='post')
     h2= user
     input(type='text', name='username', value=account.username)
-    input(type='text', name='password', value=account.password)
     select(name='hostname')
       option(value=account.hostname._id) #{account.hostname.hostname}
       each server in servers

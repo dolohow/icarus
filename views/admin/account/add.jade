@@ -6,7 +6,6 @@ block content
         each user in users
           option(value=user._id) #{user.user}
       input(type='text', name='username', placeholder='username')
-      input(type='text', name='password', placeholder='password')
       select(name='hostname')
         each server in servers
           option(value=server._id) #{server.hostname}
