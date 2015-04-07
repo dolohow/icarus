@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 
 var app = rewire('../../app.js');
 
-var config = require('../../config');
 var User = require('../../models/user.js');
 
 describe('Authentication', function () {

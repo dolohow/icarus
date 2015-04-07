@@ -47,7 +47,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         ignores: ['public/vendor/**/*']
       },
-      all: ['{,*/}*.js', 'bin/www', 'public/**/*js']
+      all: ['{,*/}*.js', 'bin/www', 'public/**/*js', 'tests/**/*js']
     },
     watch: {
       scripts: {

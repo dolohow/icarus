@@ -44,7 +44,7 @@ describe('Model User', function () {
         assert.equal(err, 'Transfer incomplete');
         assert.isUndefined(user);
         done();
-      })
+      });
     });
     it('should populate err when user not found', function (done) {
       var data = {
@@ -58,7 +58,7 @@ describe('Model User', function () {
         assert.equal(err, 'No users found');
         assert.isUndefined(user);
         done();
-      })
+      });
     });
     it('should add new transfer when account number matches', function (done) {
       User.addTransfer(correctData, function (err, user) {
@@ -72,12 +72,12 @@ describe('Model User', function () {
           function (callback) {
             User.addTransfer(correctData, function () {
               callback();
-            })
+            });
           },
           function (callback) {
             User.addTransfer(correctData, function (err) {
               callback(err);
-            })
+            });
           }
         ],
         function (err) {
@@ -88,7 +88,7 @@ describe('Model User', function () {
             done();
           });
         }
-      )
-    })
+      );
+    });
   });
 });
