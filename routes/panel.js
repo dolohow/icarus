@@ -98,7 +98,7 @@ router.get('/account/:username/vnc/stop', function (req, res) {
   });
 });
 
-router.get('/account/:username/vnc/stop', function (req, res) {
+router.get('/account/:username/vnc/restart', function (req, res) {
   getUserData(req, function (err, user) {
     if (user && user.allowedVNC) {
       new ssh.SSH(user.username,
