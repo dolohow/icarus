@@ -36,8 +36,8 @@ var userSchema = new mongoose.Schema({
 
 userSchema.statics.addTransfer = function (transfer, callback) {
   callback = (typeof callback === 'function') ? callback : function () {};
-  if (!transfer.date || !transfer.title || !transfer.sender ||
-      !transfer.accountNumber || !transfer.amount) {
+  if (!transfer.date || typeof transfer.title === undefined ||
+      !transfer.sender || !transfer.accountNumber || !transfer.amount) {
     return process.nextTick(function () {
       callback(new Error('Transfer incomplete'));
     });

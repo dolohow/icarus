@@ -7,7 +7,7 @@ var User = require('../../../models/user.js');
 
 var correctData = {
   date: '2015-01-02',
-  title: 'title',
+  title: '',
   sender: 'sender',
   accountNumber: '13',
   amount: 10.00
@@ -35,6 +35,13 @@ describe('Model User', function () {
         done();
       });
     });
+    it('should allow empty title', function (done) {
+      User.addTransfer(correctData, function (err, user) {
+        assert.isDefined(user);
+        assert.property(user.transfers[0], 'title');
+        done();
+      });
+    });
     it('should reject incomplete transfers', function (done) {
       var data = {
         title: 'title',
@@ -49,7 +56,7 @@ describe('Model User', function () {
     it('should populate err when user not found', function (done) {
       var data = {
         date: '2015-01-02',
-        title: 'title',
+        title: '',
         sender: 'sender',
         accountNumber: '14',
         amount: 10.00
@@ -62,7 +69,7 @@ describe('Model User', function () {
     });
     it('should add new transfer when account number matches', function (done) {
       User.addTransfer(correctData, function (err, user) {
-        assert.property(user.transfers[0], 'title', 'title');
+        assert.property(user.transfers[0], 'title');
         assert.lengthOf(user.transfers, 1);
         done();
       });
