@@ -7,27 +7,8 @@ mixin multipartForm(name)
 
 extends layout
 block content
-    +multipartForm('mbank')
-    +multipartForm('paypal')
-    h2= counter
-    if transfers
-      table
-        tr
-          th User
-          th Data
-          th Tytuł
-          th Nadawca
-          th Kwota
-          each transfer in transfers
-            tr(title=transfer.accountNumber)
-              td
-                select(name='user')
-                  option
-                  each user in users
-                    option(value=user._id) #{user.user}
-              td= transfer.date
-              td= transfer.title
-              td= transfer.sender
-              td= transfer.amount
-              td: button OK
-      script(type='text/javascript', src='/js/add-account-number.js')
+  +multipartForm('mbank')
+  +multipartForm('paypal')
+  h2= err
+  if totalTransfers
+    p Znaleziono przelewów: #{totalTransfers}

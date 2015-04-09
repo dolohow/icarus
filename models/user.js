@@ -34,31 +34,28 @@ var userSchema = new mongoose.Schema({
   }]
 });
 
-userSchema.statics.addTransfer = function (data, callback) {
-  callback = (typeof callback === 'function') ? callback : function() {};
-  this.findOne({accountNumbers: data.accountNumber}, function (err, user) {
-    if (!data.hasOwnProperty('date') ||
-      !data.hasOwnProperty('title') ||
-      !data.hasOwnProperty('sender') ||
-      !data.hasOwnProperty('amount')) {
-      return callback('Transfer incomplete');
-    }
-
+userSchema.statics.addTransfer = function (transfer, callback) {
+  callback = (typeof callback === 'function') ? callback : function () {};
+  if (!transfer.date || !transfer.title || !transfer.sender ||
+      !transfer.accountNumber || !transfer.amount) {
+    return process.nextTick(function () {
+      callback(new Error('Transfer incomplete'));
+    });
+  }
+  this.findOne({accountNumbers: transfer.accountNumber}, function (err, user) {
     if (!user) {
-      return callback('No users found');
+      return callback(new Error('No users found'));
     }
-
     for (var i = 0; i < user.transfers.length; i++) {
       if (user.transfers[i].date.toLocaleDateString() ===
-        new Date(data.date).toLocaleDateString() &&
-        user.transfers[i].title === data.title &&
-        user.transfers[i].sender === data.sender &&
-        user.transfers[i].amount === data.amount) {
-        return callback('Transfer exists');
+          new Date(transfer.date).toLocaleDateString() &&
+            user.transfers[i].title === transfer.title &&
+              user.transfers[i].sender === transfer.sender &&
+                user.transfers[i].amount === transfer.amount) {
+        return callback(new Error('Transfer exists'));
       }
     }
-
-    user.transfers.push(data);
+    user.transfers.push(transfer);
     user.save(function (err) {
       if (err) {
         callback(err);

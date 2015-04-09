@@ -179,45 +179,28 @@ router.get('/payment', function (req, res) {
 });
 
 router.post('/payment', function (req, res) {
+  function processTransfer(err, transfers) {
+    if (err) {
+      return res.render('admin/payment', {err: err.message});
+    }
+    if (!transfers) {
+      return res.render('admin/payment', {err: 'No transfers found'});
+    }
+    for (var i = transfers.length - 1; i >= 0; i--) {
+      User.addTransfer(transfers[i]);
+    }
+    res.render('admin/payment', {
+      totalTransfers: transfers.length
+    });
+  }
+
   if (req.files.mbank) {
     var mbank = iconv.decode(req.files.mbank.buffer, 'cp1250');
-    csv.parse.mbank(mbank, function (err, transfers) {
-      if (err) {
-        res.json({err: err});
-      }
-      async.series([
-          function (callback) {
-            User.find({}, '_id user')
-              .sort({'user': 'asc'})
-              .exec(function (err, users) {
-                if (err) {
-                  console.log(err);
-                }
-                callback(null, users);
-              });
-          },
-          function (callback) {
-            for (var i = transfers.length - 1; i >= 0; i--) {
-              User.addTransfer(transfers[i]);
-            }
-            callback();
-          }
-        ],
-        function (err, results) {
-          res.render('admin/payment', {
-            users: results[0],
-            transfers: transfers});
-        });
-    });
+    csv.parse.mbank(mbank, processTransfer);
   }
   if (req.files.paypal) {
     var paypal = iconv.decode(req.files.paypal.buffer, 'cp1250');
-    csv.parse.paypal(paypal, function (err, data) {
-      if (err) {
-        res.json({err: err});
-      }
-      res.json(data);
-    });
+    csv.parse.paypal(paypal, processTransfer);
   }
 });
 
