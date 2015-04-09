@@ -13,7 +13,7 @@ function getUserData(req, callback) {
     .exec(function (err, user) {
       if (err) {
         console.log(err);
-        return callback({err: 'Something went wrong'});
+        return callback(new Error('Something went wrong'));
       }
       if (user) {
         user = {
@@ -28,7 +28,7 @@ function getUserData(req, callback) {
         };
         return callback(null, user);
       }
-      return callback({err: 'Account not exists'});
+      return callback(new Error('Account not exists'));
     });
 }
 

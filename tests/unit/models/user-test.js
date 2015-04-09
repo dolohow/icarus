@@ -41,7 +41,7 @@ describe('Model User', function () {
         accountNumber: '13'
       };
       User.addTransfer(data, function (err, user) {
-        assert.equal(err, 'Transfer incomplete');
+        assert.equal(err.message, 'Transfer incomplete');
         assert.isUndefined(user);
         done();
       });
@@ -55,7 +55,7 @@ describe('Model User', function () {
         amount: 10.00
       };
       User.addTransfer(data, function (err, user) {
-        assert.equal(err, 'No users found');
+        assert.equal(err.message, 'No users found');
         assert.isUndefined(user);
         done();
       });
@@ -81,7 +81,7 @@ describe('Model User', function () {
           }
         ],
         function (err) {
-          assert.equal(err, 'Transfer exists');
+          assert.equal(err.message, 'Transfer exists');
           User.findOne({user: 'test@test.com'}, function (err, user) {
             assert.property(user.transfers[0], 'title', 'title');
             assert.lengthOf(user.transfers, 1);
