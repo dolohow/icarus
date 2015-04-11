@@ -3,6 +3,8 @@ block content
   form(method='post')
     h2= user
     input(type='text', name='username', value=account.username)
+    label(for='payForAdmin') Pay for admin
+    input(type='checkbox', name='payForAdmin', checked=account.payForAdmin)
     select(name='hostname')
       option(value=account.hostname._id) #{account.hostname.hostname}
       each server in servers

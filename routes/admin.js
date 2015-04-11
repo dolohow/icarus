@@ -81,8 +81,12 @@ router.get('/account/add', function (req, res) {
 
 router.post('/account/add', function (req, res) {
   User.findById(req.body.user, function (err, user) {
+    if (err) {
+      console.log(err);
+    }
     user.accounts.push({
       username: req.body.username,
+      payForAdmin: req.body.payForAdmin,
       hostname: req.body.hostname,
       allowedTorrents: req.body.allowedTorrents,
       allowedTransfer: req.body.allowedTransfer,
@@ -142,6 +146,7 @@ router.post('/account/edit/:id', function (req, res) {
   User.update({'accounts._id': req.params.id}, {
     $set: {
       'accounts.$.username': req.body.username,
+      'accounts.$.payForAdmin': req.body.payForAdmin,
       'accounts.$.hostname': req.body.hostname,
       'accounts.$.allowedTorrents': req.body.allowedTorrents,
       'accounts.$.allowedTransfer': req.body.allowedTransfer,

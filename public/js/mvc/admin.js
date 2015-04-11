@@ -33,8 +33,12 @@ function accountView(user, server) {
   return [
     user.accounts.map(function (account) {
       if (account.hostname.hostname === server.hostname) {
-        return m('tr',
-          {style: {color: isAccountValid(account) ? 'green' : 'red'}}, [
+        return m('tr', {
+          style: {
+            color: isAccountValid(account) ? 'green' : 'red',
+            backgroundColor: account.payForAdmin ? 'yellow' : null
+          }
+        }, [
             m('td', user.user),
             m('td', [
               m('a',

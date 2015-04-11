@@ -21,6 +21,7 @@ var userSchema = new mongoose.Schema({
   money: {type: Number, default: 0},
   accounts: [{
     username: String,
+    payForAdmin: Boolean,
     hostname: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Servers'
