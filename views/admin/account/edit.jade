@@ -9,10 +9,15 @@ block content
       option(value=account.hostname._id) #{account.hostname.hostname}
       each server in servers
         option(value=server._id) #{server.hostname}
+    label(for='allowedTorrents') Allowed torrents
     input(type='number', name='allowedTorrents', value=account.allowedTorrents)
+    label(for='allowedTransfer') Allowed transfer
     input(type='number', name='allowedTransfer', value=account.allowedTransfer)
+    label(for='allowedVNC') VNC
     input(type='checkbox', name='allowedVNC', checked=account.allowedVNC)
+    label(for='allowedCapacity') Allowed capacity
     input(type='number', name='allowedCapacity', value=account.allowedCapacity)
+    label(for='price') Price
     input(type='number', name='price', value=account.price)
     //TODO: Remove after Jade 2.0
     - var date = new Date(account.validity);
@@ -23,6 +28,7 @@ block content
     - day = day > 9 ? day : '0' + day;
     - var validity = year + '-' + month + '-' + day;
     input(type='date', name='validity', value=validity)
+    button(type='submit') Edit
   table.payments
     tr
       th Data

@@ -9,3 +9,6 @@ bower_components/
 *.tmp
 config.js
 public/vendor
+.sass-cache/
+*.csv
+*.css

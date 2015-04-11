@@ -28,16 +28,13 @@ module.exports = function (grunt) {
             js: ['concat', 'uglify', 'filerev'],
             css: ['concat',  'cssmin', 'filerev']
           },
-          dirTasks: 'filerev'
+          dirTasks: 'filerev',
+          prefix: 'public/'
         },
         files: [
           {
-            src: 'views/index.jade',
-            dest: 'dist/index.jade'
-          },
-          {
-            src: 'views/layout.jade',
-            dest: 'dist/layout.jade'
+            src: 'views/admin/layout.jade',
+            dest: 'dist/admin/layout.jade'
           }
         ]
       }
@@ -61,19 +58,22 @@ module.exports = function (grunt) {
         tasks: ['test']
       },
       compass: {
-        files: ['public/style/sass/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server']
+        files: ['public/style/{,*/}*.{scss,sass}'],
+        tasks: ['compass:dev']
       }
     },
     compass: {
       options: {
-        sassDir: 'public/style/sass',
-        cssDir: 'public/styles',
-        importPath: 'public/vendor/bower_components',
+        sassDir: 'public/style',
+        cssDir: 'public/style',
         relativeAssets: false
       },
-      dist: {},
-      server: {}
+      production: {
+        options: {
+          environment: 'production'
+        }
+      },
+      dev: {}
     },
     mochaTest: {
       test: {
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('build', [
     'clean',
-    'jadeUsemin'
+    'compass:production'
   ]);
   grunt.registerTask('test', ['jshint', 'mochaTest']);
 };

@@ -5,16 +5,17 @@ block content
       select(name='user')
         each user in users
           option(value=user._id) #{user.user}
-      input(type='text', name='username', placeholder='username')
+      input(type='text', name='username', placeholder='Username')
       label(for='payForAdmin') Pay for admin
       input(type='checkbox', name='payForAdmin')
       select(name='hostname')
         each server in servers
           option(value=server._id) #{server.hostname}
-      input(type='number', name='allowedTorrents', placeholder='allowedTorrents')
-      input(type='number', name='allowedTransfer', placeholder='allowedTransfer')
-      input(type='checkbox', name='allowedVNC', placeholder='allowedVNC')
-      input(type='number', name='allowedCapacity', placeholder='allowedCapacity')
-      input(type='number', name='price', placeholder='price')
+      input(type='number', name='allowedTorrents', placeholder='Allowed torrents')
+      input(type='number', name='allowedTransfer', placeholder='Allowed transfer')
+      label(for='allowedVNC') VNC
+      input(type='checkbox', name='allowedVNC')
+      input(type='number', name='allowedCapacity', placeholder='Capacity')
+      input(type='number', name='price', placeholder='Price')
       input(type='date', name='validity')
-      input(type='submit', name='OK')
+      button(type='submit') Add

@@ -36,6 +36,11 @@ plan.remote('install-dep', function (remote) {
   remote.exec('chmod 600 /etc/apt/sources.list.d/passenger.list');
   //remote.exec('aptitude install apt-transport-https -y');
 
+  /* Compass */
+  remote.exec('aptitude install ruby1.9.1-dev');
+  remote.exec('REALLY_GEM_UPDATE_SYSTEM=true gem update --system');
+  remote.exec('gem install compass');
+
   /* Install them all */
   remote.exec('aptitude update');
   remote.exec('aptitude install git make gcc g++ sudo python2.7 mongodb-org ' +

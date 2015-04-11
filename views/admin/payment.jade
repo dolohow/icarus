@@ -1,9 +1,9 @@
 mixin multipartForm(name)
   .form
-    p= name
     form(method='post' enctype='multipart/form-data')
+      label(for=name) #{name}
       input(type='file' name=name)
-      input(type='submit' value='OK')
+      button(type='submit') Upload
 
 extends layout
 block content
