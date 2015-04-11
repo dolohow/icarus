@@ -14,9 +14,15 @@ block content
     input(type='checkbox', name='allowedVNC', checked=account.allowedVNC)
     input(type='number', name='allowedCapacity', value=account.allowedCapacity)
     input(type='number', name='price', value=account.price)
-    //TODO: Transfer data into valid format (Jade will do after 2.0)
-    input(type='date', name='validity', value=account.validity)
-    input(type='submit', name='OK')
+    //TODO: Remove after Jade 2.0
+    - var date = new Date(account.validity);
+    - var year = date.getFullYear();
+    - var month = date.getMonth() + 1;
+    - var day = date.getDate();
+    - month = month > 9 ? month : '0' + month;
+    - day = day > 9 ? day : '0' + day;
+    - var validity = year + '-' + month + '-' + day;
+    input(type='date', name='validity', value=validity)
   table.payments
     tr
       th Data
