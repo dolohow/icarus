@@ -24,7 +24,7 @@ plan.remote('install-dep', function (remote) {
   remote.exec('rm node-' + nodeVersion + '-linux-x64.tar.gz');
 
   /* Node deps */
-  remote.exec('PATH=$PATH:/opt/node/bin npm install -g grunt-cli bower');
+  remote.exec('PATH=$PATH:/opt/node/bin npm install -g gulp bower');
 
   /* Passenger */
   remote.exec('apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ' +

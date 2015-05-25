@@ -6,7 +6,7 @@ Those should be visible on PATH env variable.
 * npm
 * mongodb
 * bower
-* grunt-cli
+* gulp
 * flightplan
 
 ## Installation of dependencies
@@ -28,7 +28,7 @@ cp config.js.example config.js
 
 ## Building
 ```shell
-grunt build
+gulp build
 ```
 
 ## Deployment
@@ -60,15 +60,12 @@ PORT=5000 NODE_ENV=production npm start
 If you want to have an automatic reload of a server you might want to use a
 command
 ```shell
-grunt nodemon
+gulp
 ```
 If you want to automatically reload web browser after changes in files related
-to web browser:
-```shell
-grunt watch:scripts
-```
-In that case you might be interest in looking at [Enabling live reload in your
-html].
+to web browser you might be interest in looking at [Enabling live reload in
+your html].
+
 ### Production environment
 We recommend you to use passenger along with nginx. It can spawn multiple
 processes and can also deal with crashes.
@@ -76,12 +73,12 @@ You can use `fly` for that purpose, see **Deploy** section.
 
 ## Runing tests
 ```shell
-grunt test
+gulp test
 ```
 You can also use a grunt task to run tests after modification of a single file
 by:
 ```shell
-grunt watch:test
+gulp
 ```
 
 [Enabling live reload in your html]:(https://github.com/gruntjs/grunt-contrib-watch/blob/master/docs/watch-examples.md#enabling-live-reload-in-your-html)
